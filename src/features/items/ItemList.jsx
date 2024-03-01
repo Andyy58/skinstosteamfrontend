@@ -25,7 +25,7 @@ const ItemList = () => {
   });
 
   return (
-    <Card className="h-full w-1/2 overflow-scroll">
+    <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>

@@ -1,3 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto&family=Share+Tech+Mono&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "Outfit", sans-serif;
+  color: white;
+}
+
+.blue-text-gradient {
+  background-image: linear-gradient(to bottom, #9dcdef, #817eff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lightblue-layer-blur {
+  background: #9dcdefbb;
+  filter: blur(275px);
+}
+
+.paleviolet-layer-blur {
+  background: linear-gradient(180deg, #b6b4fd 0%, #817eff 100%);
+  filter: blur(263px);
+}
+
+.background-gradient {
+  background-image: linear-gradient(
+      to right,
+      #000000 -100%,
+      transparent 10%,
+      transparent 90%,
+      #000000 200%
+    ),
+    linear-gradient(to bottom, #1b2138 0%, #1b2138 80%, #000000 200%);
+}

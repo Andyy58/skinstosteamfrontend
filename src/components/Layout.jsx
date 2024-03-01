@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
+import Navbar from "./Navbar";
 
 const Layout = () => {
   return (
-    <>
-      <Header />
-      <main className="App">
+    <div className="bg-[#1B2138]">
+      <Navbar />
+      <main className="bg-slate-950 text-slate-200">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };
 
