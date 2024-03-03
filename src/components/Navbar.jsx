@@ -11,7 +11,9 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="flex flex-row items-center pt-5 fixed w-full z-50">
+    <div className="flex flex-row items-center pt-5 relative w-full">
+      <div className="absolute w-[500px] h-[500px] paleviolet-layer-blur z-0 left-72 rounded-full bottom-[20%]"></div>
+      <div className="absolute w-[400px] h-[400px] top-[320%] left-[68em] rounded-full lightblue-layer-blur z-0"></div>
       <div className="flex flex-row items-center font-bold cursor-pointer flex-1 text-[20pt] pl-48">
         <img src="/top-upSpy logo.png" className="w-[49pt]"></img>
         <h2>Top-up Spy</h2>

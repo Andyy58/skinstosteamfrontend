@@ -3,10 +3,10 @@ import { useGetItemsQuery } from "../features/items/ItemsSlice";
 
 const Home = () => {
   return (
-    <section className="background-gradient h-[1440px] pt-64 flex justify-center">
+    <section className="background-gradient min-h-[1440px] h-screen pt-52 flex justify-center">
       <div className="flex w-fit justify-between">
         <div className="w-fit relative">
-          <div className="absolute w-[500px] h-[500px] paleviolet-layer-blur z-0 left-32 rounded-full top-[-52%]"></div>
+          {/* <div className="absolute w-[500px] h-[500px] paleviolet-layer-blur z-0 left-32 rounded-full top-[-52%]"></div> */}
           <h1 className="text-[72pt] font-bold text-right p-0 m-0 leading-tight pt-2 pr-24 blue-text-gradient relative z-10">
             <span className="nowrap text-transparent">Get More Steam</span>
             <br /> Funds For Your
@@ -30,7 +30,6 @@ const Home = () => {
         </div>
 
         <div className="w-[520px] h-[560px] relative">
-          <div className="absolute w-[100%] h-[95%] top-[-5%] left-7 rounded-full lightblue-layer-blur z-0"></div>
           <img
             src="/Gaben stonks.png"
             className="w-full object-cover aspect-auto relative z-10"
