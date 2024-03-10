@@ -1,7 +1,7 @@
-import ItemList from "../features/items/ItemList";
-import { useGetItemsQuery } from "../features/items/ItemsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <section className="background-gradient min-h-[1440px] h-screen pt-52 flex justify-center">
       <div className="flex w-fit justify-between">
@@ -23,7 +23,10 @@ const Home = () => {
             <button className="border-2 border-[#9dcdef] rounded-full py-7 px-11 text-[20pt] text-[#9dcdef] font-semibold mr-4 tracking-wider">
               How Does It Work?
             </button>
-            <button className="bg-[#817eff] rounded-full px-11 text-[20pt] font-semibold mr-4 tracking-wider">
+            <button
+              className="bg-[#817eff] rounded-full px-11 text-[20pt] font-semibold mr-4 tracking-wider"
+              onClick={() => navigate("/charts")}
+            >
               Check Out The Charts →
             </button>
           </div>

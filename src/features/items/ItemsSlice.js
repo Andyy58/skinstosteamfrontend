@@ -3,32 +3,28 @@ import { ApiSlice } from "../api/apiSlice";
 
 const itemsAdapter = createEntityAdapter();
 
-const intialState = itemsAdapter.getInitialState();
+const initialState = itemsAdapter.getInitialState({ itemCount: 0 });
 
 export const extendedApiSlice = ApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getItems: builder.query({
-      query: () => "/?start=10&limit=40",
+      query: (args) => {
+        const { start = 0, limit = 10 } = args || {};
+        return `?start=${start}&limit=${limit}`;
+      },
+      /* query: () => "/", */
       transformResponse: (responseData) => {
-        const itemsList = responseData || [];
+        const { itemsList = [], itemCount = 0 } = responseData || {};
 
-        return itemsAdapter.setAll(intialState, itemsList);
+        const itemsState = itemsAdapter.setAll(initialState, itemsList);
+
+        return {
+          ...itemsState,
+          itemCount,
+        };
       },
     }),
   }),
 });
 
 export const { useGetItemsQuery: useGetItemsQuery } = extendedApiSlice;
-
-// Useful for grabbing status of getPosts request
-export const selectItemsResult = extendedApiSlice.endpoints.getItems.select();
-
-// Create memoized selector
-const selectItemsData = createSelector(
-  selectItemsResult,
-  (result) => result.data
-);
-
-export const { selectAll: selectAllItems } = itemsAdapter.getSelectors(
-  (state) => selectItemsData(state) ?? intialState
-);
