@@ -9,8 +9,13 @@ export const extendedApiSlice = ApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getItems: builder.query({
       query: (args) => {
-        const { start = 0, limit = 10 } = args || {};
-        return `?start=${start}&limit=${limit}`;
+        const {
+          start = 0,
+          limit = 10,
+          reversed = false,
+          sortBy = 1,
+        } = args || {};
+        return `?start=${start}&limit=${limit}&reverse=${reversed}&sortBy=${sortBy}`;
       },
       /* query: () => "/", */
       transformResponse: (responseData) => {

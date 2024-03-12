@@ -1,114 +1,67 @@
 import { useState } from "react";
+
 import ItemList from "../features/items/ItemList";
-import { useGetItemsQuery } from "../features/items/ItemsSlice";
+import SortOrderArrows from "./SortOrderArrows";
 
 const Charts = () => {
-  const [start, setStart] = useState(0);
-  const limit = 10;
+  const [sortBy, setSortBy] = useState(1); // 1: liquidity, 2: amount, 3: amount spent
+  const [reversed, setReversed] = useState(false); // List order
 
-  let pageButtons;
-
-  const { data, error, isLoading } = useGetItemsQuery({ start, limit });
-  let pageCount = 0;
-  if (!isLoading) {
-    const itemCount = data.itemCount;
-    pageCount = Math.floor(itemCount / limit) + 1;
-    const curPage = Math.floor(start / limit) + 1;
-
-    const pageNumbers = () => {
-      let pageNums = [1];
-
-      if (curPage >= 5) {
-        pageNums.push("...");
-      }
-
-      console.log(curPage < 4);
-
-      if (curPage < 4) {
-        pageNums = pageNums.concat([2, 3, 4, 5, 6]);
-      } else if (curPage > pageCount - 3) {
-        pageNums = pageNums.concat([
-          pageCount - 5,
-          pageCount - 4,
-          pageCount - 3,
-          pageCount - 2,
-          pageCount - 1,
-        ]);
-      } else {
-        pageNums = pageNums.concat([
-          curPage - 2,
-          curPage - 1,
-          curPage,
-          curPage + 1,
-          curPage + 2,
-        ]);
-      }
-
-      if (curPage <= pageCount - 4) {
-        pageNums.push("...");
-      }
-      pageNums.push(pageCount);
-
-      return pageNums;
-    };
-
-    pageButtons = pageNumbers().map((pageNum, index) => (
-      <button
-        className={`mx-1 ${
-          pageNum === curPage ? "text-[#B4B4B4] underline" : "text-white"
-        }`}
-        key={index}
-        disabled={pageNum === "..." || pageNum === curPage}
-        onClick={() => pageNum !== "..." && setStart((pageNum - 1) * limit)}
-      >
-        {pageNum}
-      </button>
-    ));
-  }
+  const changeSortingOrder = (id) => {
+    if (sortBy === id) {
+      setReversed(!reversed);
+    } else {
+      setSortBy(id);
+      setReversed(false);
+    }
+  };
 
   return (
     <section className="w-full h-fit pb-20 min-h-[1440px] background-gradient flex justify-center pt-24">
       <div className="w-[100em] h-fit min-h-[500px] flex flex-col justify-start items-center bg-[#dceafc78] rounded-3xl ">
-        <div className="w-[98%] h-16 bg-[#D9D9D9] mt-6 mb-2 rounded-2xl grid grid-cols-[1fr_11em_10em_15em] shadow">
+        <div className="w-[98%] h-16 bg-[#D9D9D9] mt-6 mb-2 rounded-2xl grid grid-cols-[1fr_9em_14em_13em] shadow">
           <h3 className=" pl-8 text-[20pt] text-black flex items-center">
             Name
           </h3>
-          <span className="flex-row flex items-center justify-between">
+          <span
+            className="flex-row flex items-center justify-between cursor-pointer relative"
+            onClick={() => changeSortingOrder(1)}
+          >
             <div className="w-[2px] h-full bg-[#535C67]"></div>
-            <h3 className="text-[20pt] text-black text-center">Liquidity ⓘ</h3>
+            <div className="flex items-center ml-2">
+              <h3 className="text-[20pt] text-black text-center">Liquidity</h3>
+              <SortOrderArrows
+                direction={sortBy === 1 ? (reversed ? "up" : "down") : ""}
+              />
+            </div>
+
             <div className="w-[2px] h-full bg-[#535C67]"></div>
           </span>
-          <span className="items-center flex justify-center">
-            <h3 className="text-[20pt] text-black ">% Profit ⓘ</h3>
+          <span
+            className="items-center flex justify-center cursor-pointer"
+            onClick={() => changeSortingOrder(2)}
+          >
+            <h3 className="text-[20pt] text-black ml-2">Top-up Amount</h3>
+            <SortOrderArrows
+              direction={sortBy === 2 ? (reversed ? "up" : "down") : ""}
+            />
           </span>
           <span className="flex-row flex items-center w-full">
             <div className="w-[2px] h-full bg-[#535C67]"></div>
-            <h3 className="text-[20pt] text-black mx-auto text-center">
-              Amount Profit ⓘ
-            </h3>
+            <div className="flex ml-3 items-center">
+              <h3
+                className="text-[20pt] text-black text-center cursor-pointer"
+                onClick={() => changeSortingOrder(3)}
+              >
+                Amount Spent
+              </h3>
+              <SortOrderArrows
+                direction={sortBy === 3 ? (reversed ? "up" : "down") : ""}
+              />
+            </div>
           </span>
         </div>
-        <ItemList start={start} limit={limit} />
-        <div className="h-10 w-full flex justify-between">
-          <div className=""></div>
-          <div className="flex">
-            <button
-              className="pr-2"
-              onClick={() => setStart(start - limit >= 0 ? start - limit : 0)}
-            >
-              Prev
-            </button>
-            {pageButtons}
-            <button
-              className="pr-10"
-              onClick={() =>
-                setStart(start + limit <= itemCount ? start + limit : 0)
-              }
-            >
-              Next
-            </button>
-          </div>
-        </div>
+        <ItemList sortBy={sortBy} reversed={reversed} />
       </div>
     </section>
   );
